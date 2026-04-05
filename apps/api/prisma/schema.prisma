@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  displayName String
+  avatarData  Json     @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  guestToken  String?  @unique
+  rooms       RoomPlayer[]
+  clips       Clip[]
+}
+
+model Room {
+  id        String     @id @default(cuid())
+  gameType  GameType
+  status    RoomStatus @default(WAITING)
+  hostId    String
+  maxPlayers Int       @default(8)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  players   RoomPlayer[]
+  clips     Clip[]
+}
+
+model RoomPlayer {
+  id       String   @id @default(cuid())
+  userId   String
+  roomId   String
+  joinedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room     Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+}
+
+model Clip {
+  id        String   @id @default(cuid())
+  userId    String
+  roomId    String
+  fileKey   String
+  shareSlug String   @unique @default(cuid())
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+enum GameType {
+  SNITCH
+  SHOVE
+  WHO_SAID_THAT
+}
+
+enum RoomStatus {
+  WAITING
+  IN_PROGRESS
+  FINISHED
+}
