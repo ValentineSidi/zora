@@ -1,20 +1,15 @@
 {
   "name": "zora",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:web": "npm run dev --workspace=apps/web"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ValentineSidi/zora.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ValentineSidi/zora/issues"
-  },
-  "homepage": "https://github.com/ValentineSidi/zora#readme"
+  "engines": {
+    "node": ">=22.0.0"
+  }
 }
