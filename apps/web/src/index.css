@@ -1,0 +1,24 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-night: #0D0D14;
+  --color-aurora: #7B5EA7;
+  --color-dawn: #FF6B6B;
+  --color-surface: #16161F;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text-primary: #F0EEF6;
+  --color-text-secondary: #8B89A0;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--color-night);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
