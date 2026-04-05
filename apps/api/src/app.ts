@@ -4,6 +4,7 @@ import cors from '@fastify/cors'
 import rateLimit from '@fastify/rate-limit'
 import websocket from '@fastify/websocket'
 import { authRoutes } from './routes/auth'
+import { roomRoutes } from './routes/rooms'
 
 export const buildApp = async () => {
   const app = Fastify({
@@ -35,6 +36,7 @@ export const buildApp = async () => {
   })
 
   await app.register(authRoutes, { prefix: '/api' })
+  await app.register(roomRoutes, { prefix: '/api' })
 
   return app
 }
