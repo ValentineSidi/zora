@@ -3,6 +3,7 @@ import cookie from '@fastify/cookie'
 import cors from '@fastify/cors'
 import rateLimit from '@fastify/rate-limit'
 import websocket from '@fastify/websocket'
+import { authRoutes } from './routes/auth'
 
 export const buildApp = async () => {
   const app = Fastify({
@@ -32,6 +33,8 @@ export const buildApp = async () => {
   app.get('/health', async () => {
     return { status: 'ok', timestamp: new Date().toISOString() }
   })
+
+  await app.register(authRoutes, { prefix: '/api' })
 
   return app
 }
